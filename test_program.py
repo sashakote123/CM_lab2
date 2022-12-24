@@ -31,41 +31,6 @@ def get_const():
     return const
 
 
-def get_analytic_data(N):
-    List_x = []
-    List = []
-    h = 1 / N
-    for i in range(N + 1):
-        List_x.append(h * i)
-        List.append(analytic2(h * i))
-    return List_x, List
-
-
-def analytic(N):
-    List = []
-    List_x = []
-    h = (1 - 0) / N
-
-    a_1 = ((8 * 2 ** (1 / 2)) / math.pi ** 2) * math.exp(
-        math.pi / (2 ** (1 / 2)) - math.pi / (2 ** (3 / 2))) - math.exp(
-        math.pi / (2 ** (1 / 2)) - math.pi / (2 ** (3 / 2))) - 8 * (2 ** (1 / 2)) / math.pi ** 2
-    a_2 = math.exp(-math.pi / (2 ** (3 / 2))) - math.exp(math.pi / (2 ** (1 / 2)) - math.pi / (2 ** (3 / 2)))
-    a = a_1 / a_2
-    b = 1 - 8 * (2 ** (1 / 2)) / math.pi ** 2 - a
-    for i in range(N + 1):
-
-        if h * i < math.pi / 4:
-            List_x.append(h * i)
-            List.append(
-                (-math.e / (math.e ** 2 - 1)) * math.exp(h * i) + (math.e / (math.e ** 2 - 1)) * math.exp(-h * i) + 1)
-        else:
-            List_x.append(h * i)
-            List.append(b * math.exp(
-                (math.pi * h * i / math.sqrt(2)) - (math.pi * h * i / (2 * math.sqrt(2)))) + a * math.exp(
-                -math.pi * h * i / (2 * math.sqrt(2))) + (8 * math.sqrt(2) / math.pi ** 2))
-
-    return List_x, List
-
 
 def func_a(i, h):
     x_i = i * h
@@ -199,43 +164,6 @@ def setMatrix2(N):
     return Matrix
 
 
-def divide(matrix, i, j):
-    tmp = matrix[i][j]
-    for k in range(len(matrix[i])):
-        matrix[i][k] = matrix[i][k] / tmp
-    return matrix
-
-
-def gauss(matrix, i, j):
-    matrix = divide(matrix, i, j)
-    for k in range(i + 1, len(matrix[i]) - 1):
-        tmp = matrix[k][j]
-        for l in range(len(matrix[i])):
-            matrix[k][l] = matrix[k][l] - matrix[i][l] * tmp
-    return matrix
-
-
-def gauss2(matrix, i, j):
-    k = i - 1
-
-    while k >= 0:
-        l = len(matrix[i]) - 1
-        tmp = matrix[k][j]
-        while l >= 0:
-            matrix[k][l] = matrix[k][l] - matrix[i][l] * tmp
-            l -= 1
-        k -= 1
-    return matrix
-
-
-def jordan_Gauss_Method(matrix):
-    for i in range(len(matrix)):
-        gauss(matrix, i, i)
-    for i in range(len(matrix)):
-        gauss2(matrix, i, i)
-    return matrix
-
-
 def progonka_forward(matrix, N):
     List_alpha = []
     List_beta = []
@@ -273,32 +201,6 @@ def get_data1(N):
     return List_x, List_v
 
 
-def sweep(N):
-    h = 1 / N
-    m = setMatrix2(N)
-    m = jordan_Gauss_Method(m)
-    List_x = []
-    List = []
-    anal_List = analytic(N)[1]
-    e_list = []
-    List_x2 = []
-    List2 = []
-    x = 0
-    for i in range(N + 1):
-        List_x.append(h * i)
-        List.append(m[i][-1])
-        e_list.append(abs(anal_List[i] - m[i][-1]))
-
-    return List_x, List, anal_List, e_list
-
-
-# print(sweep(100)[3])
-# print(max(sweep(10)[3]))
-
-# plt.plot(analytic(100)[0], analytic(100)[1])
-# plt.plot(sweep(100)[0], sweep(100)[1])
-
-# plt.show()
 def info(N):
     h = 1 / N
     List_v = get_data1(N)[1]
