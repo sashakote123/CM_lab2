@@ -185,13 +185,6 @@ def get_data2(N):
                 x_eps2 = i
         else:
             list_VSubV2.append(0)
-    '''''
-    print('Узел сетки с Epsilon 2:', x_eps2)
-    if eps2 <= Eps:
-        print('Epsilon 2 <= 0.5e-6')
-    else:
-        print('Не выполняется условие задачи')
-    '''''
-    return list_x, list_V, list_x_2, list_V2, list_VSubV2
 
+    return list_x, list_V, list_x_2, list_V2, list_VSubV2
 

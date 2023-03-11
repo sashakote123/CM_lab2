@@ -5,7 +5,17 @@ import matplotlib.pyplot as plt
 global eps
 eps = math.pi / 4
 
+def get_analytic_data(N):
+    h = 1/N
+    x = 0
+    list_v = []
+    list_x =[]
+    for i in range(N+1):
+        x = i*h
+        list_v.append(analytic2(x))
+        list_x.append(x)
 
+    return list_x, list_v
 def analytic2(x):
     c1, c2, c3, c4 = get_const()
     if x < eps:
@@ -215,9 +225,9 @@ def info(N):
     return List_x, List_v, List_a, List_r
 
 
-print(max(info(2000)[3]))
-print(info(10))
-plt.plot(get_analytic_data(10)[0], get_analytic_data(10)[1])
-plt.plot(get_data1(10)[0], get_data1(10)[1], 'y')
-# plt.plot(analytic(1000)[0], analytic(1000)[1])
-# plt.show()
+
+matrix = setMatrix2(4)
+for i in range(5):
+    print(matrix[i])
+
+print(progonka_reverse(matrix,5))
